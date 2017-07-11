@@ -32,16 +32,10 @@ Package.onUse(function (api) {
   ], 'server');
 
   api.addFiles([
-    'json-routes.js',
-    'rest-login.js',
-    'middleware.js',
-    'json_error_handler_tests.js',
-    'bearer_token_parser.js',
-    'auth.js'
+    'json-routes.js'
   ], 'server');
 
   api.export([
-    'JsonRoutes',
-    'RestMiddleware',
+    'JsonRoutes'
   ], 'server');
 });
