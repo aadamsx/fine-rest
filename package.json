@@ -1,6 +1,6 @@
 {
   "name": "fine-rest",
-  "version": "1.0.0",
+  "version": "1.0.6",
   "license": "MIT",
   "description": "Json Routing for Web API",
   "main": "json-routes.js",
@@ -10,7 +10,8 @@
     "url": "git://github.com/aadamsx/fine-rest.git"
   },
   "dependencies": {
-    "babel": "^6.23.0",
+    "connect": "^2.30.2",
+    "connect-route": "^0.1.5",
     "fibers": "^2.0.0",
     "underscore": "^1.8.3"
   }

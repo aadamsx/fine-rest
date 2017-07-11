@@ -1,6 +1,6 @@
 Package.describe({
   name: 'fine-rest',
-  version: '1.0.0',
+  version: '1.0.6',
 
   // Brief, one-line summary of the package.
   summary: 'The simplest way to define server-side routes that return JSON',
@@ -28,6 +28,7 @@ Package.onUse(function (api) {
     'connect-route': '0.1.5',
     'check',
     'underscore',
+    "fibers": "^2.0.0",
     'webapp',
   ], 'server');
 
