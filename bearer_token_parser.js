@@ -1,4 +1,4 @@
-import JsonRoutes from 'json-routes';
+// import JsonRoutes from 'json-routes';
 
 /**
  * Parses bearer token from the incoming request
@@ -14,7 +14,7 @@ import JsonRoutes from 'json-routes';
  *
  * @middleware
  */
-export JsonRoutes.Middleware.parseBearerToken = (req, res, next) => {
+JsonRoutes.Middleware.parseBearerToken = (req, res, next) => {
   req.authToken = parseHeaders(req) || parseQuery(req);
   next();
 };

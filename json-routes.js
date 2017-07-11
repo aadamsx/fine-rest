@@ -1,10 +1,8 @@
 /* global JsonRoutes:true */
 
-import Fiber from 'fibers/fibers';
-import Future from 'fibers/future';
-
-const connect = Npm.require('connect');
-const connectRoute = Npm.require('connect-route');
+var Fiber = require('fibers');
+var connect = require('connect');
+var connectRoute = require('connect-route');
 
 JsonRoutes = {};
 
@@ -22,29 +20,29 @@ WebApp.connectHandlers.use(JsonRoutes.Middleware);
 JsonRoutes.routes = [];
 
 // Save reference to router for later
-let connectRouter;
+var connectRouter;
 
 // Register as a middleware
-WebApp.connectHandlers.use(Meteor.bindEnvironment(connectRoute(router => {
+WebApp.connectHandlers.use(Meteor.bindEnvironment(connectRoute(function (router) {
   connectRouter = router;
 })));
 
 // Error middleware must be added last, to catch errors from prior middleware.
 // That's why we cache them and then add after startup.
-let errorMiddlewares = [];
+var errorMiddlewares = [];
 JsonRoutes.ErrorMiddleware = {
-  use() {
+  use: function () {
     errorMiddlewares.push(arguments);
   },
 };
 
-Meteor.startup(() => {
-  _.each(errorMiddlewares, errorMiddleware => {
-    errorMiddleware = _.map(errorMiddleware, maybeFn => {
+Meteor.startup(function () {
+  _.each(errorMiddlewares, function (errorMiddleware) {
+    errorMiddleware = _.map(errorMiddleware, function (maybeFn) {
       if (_.isFunction(maybeFn)) {
         // A connect error middleware needs exactly 4 arguments because they use fn.length === 4 to
         // decide if something is an error middleware.
-        return (a, b, c, d) => {
+        return function (a, b, c, d) {
           Meteor.bindEnvironment(maybeFn)(a, b, c, d);
         }
       }
@@ -52,28 +50,28 @@ Meteor.startup(() => {
       return maybeFn;
     });
 
-    WebApp.connectHandlers.use(...errorMiddleware);
+    WebApp.connectHandlers.use.apply(WebApp.connectHandlers, errorMiddleware);
   });
 
   errorMiddlewares = [];
 });
 
-JsonRoutes.add = (method, path, handler) => {
+JsonRoutes.add = function (method, path, handler) {
   // Make sure path starts with a slash
   if (path[0] !== '/') {
-    path = `/${path}`;
+    path = '/' + path;
   }
 
   // Add to list of known endpoints
   JsonRoutes.routes.push({
-    method,
-    path,
+    method: method,
+    path: path,
   });
 
-  connectRouter[method.toLowerCase()](path, (req, res, next) => {
+  connectRouter[method.toLowerCase()](path, function (req, res, next) {
     // Set headers on response
     setHeaders(res, responseHeaders);
-    Fiber(() => {
+    Fiber(function () {
       try {
         handler(req, res, next);
       } catch (error) {
@@ -88,7 +86,7 @@ var responseHeaders = {
   Pragma: 'no-cache',
 };
 
-JsonRoutes.setResponseHeaders = headers => {
+JsonRoutes.setResponseHeaders = function (headers) {
   responseHeaders = headers;
 };
 
@@ -104,7 +102,7 @@ JsonRoutes.setResponseHeaders = headers => {
  *   stringify as the response. If `null`, the response will be "null".
  *   If `undefined`, there will be no response body.
  */
-JsonRoutes.sendResult = (res, options) => {
+JsonRoutes.sendResult = function (res, options) {
   options = options || {};
 
   // We've already set global headers on response, but if they
@@ -122,18 +120,18 @@ JsonRoutes.sendResult = (res, options) => {
 };
 
 function setHeaders(res, headers) {
-  _.each(headers, (value, key) => {
+  _.each(headers, function (value, key) {
     res.setHeader(key, value);
   });
 }
 
 function writeJsonToBody(res, json) {
   if (json !== undefined) {
-    const shouldPrettyPrint = (process.env.NODE_ENV === 'development');
-    const spacer = shouldPrettyPrint ? 2 : null;
+    var shouldPrettyPrint = (process.env.NODE_ENV === 'development');
+    var spacer = shouldPrettyPrint ? 2 : null;
     res.setHeader('Content-type', 'application/json');
     res.write(JSON.stringify(json, null, spacer));
   }
 }
 
-export JsonRoutes;
+module.exports.JsonRoutes = JsonRoutes;

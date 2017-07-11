@@ -1,7 +1,7 @@
-import RestMiddleware.handleErrorAsJson from 'json_error_handler';
-import JsonRoutes.Middleware.authenticateMeteorUserByToken from 'auth';
-import JsonRoutes.Middleware.parseBearerToken from 'bearer_token_parser';
-import JsonRoutes from 'json-routes';
+// import RestMiddleware.handleErrorAsJson from 'json_error_handler';
+// import JsonRoutes.Middleware.authenticateMeteorUserByToken from 'auth';
+// import JsonRoutes.Middleware.parseBearerToken from 'bearer_token_parser';
+// import JsonRoutes from 'json-routes';
 
 JsonRoutes.Middleware.use(JsonRoutes.Middleware.parseBearerToken);
 JsonRoutes.Middleware.use(JsonRoutes.Middleware.authenticateMeteorUserByToken);

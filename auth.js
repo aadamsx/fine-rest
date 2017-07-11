@@ -1,6 +1,5 @@
-import Fiber from 'fibers';
-import Future from 'fibers/future';
-import JsonRoutes from 'json-routes';
+var Fiber = require('fibers');
+// import JsonRoutes from 'json-routes';
 /**
  * SimpleRest middleware for validating a Meteor.user's login token
  *
@@ -11,7 +10,7 @@ import JsonRoutes from 'json-routes';
  *
  * @middleware
  */
-export JsonRoutes.Middleware.authenticateMeteorUserByToken =
+JsonRoutes.Middleware.authenticateMeteorUserByToken =
   (req, res, next) => {
     Fiber(() => {
       const userId = getUserIdFromAuthToken(req.authToken);

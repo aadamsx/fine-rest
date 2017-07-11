@@ -14,7 +14,7 @@ Package.describe({
 });
 
 Npm.depends({
-  connect: '2.30.2',
+  'connect': '2.30.2',
   'connect-route': '0.1.5',
 });
 
@@ -24,6 +24,8 @@ Package.onUse(function (api) {
   api.use([
     'accounts-base@1.2.0',
     'accounts-password',
+    'connect': '2.30.2',
+    'connect-route': '0.1.5',
     'check',
     'underscore',
     'webapp',

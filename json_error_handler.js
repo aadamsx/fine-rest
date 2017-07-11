@@ -1,4 +1,4 @@
-import RestMiddleware from 'middleware';
+// import RestMiddleware from 'middleware';
 /**
  * Handle any connect errors with a standard JSON response
  *
@@ -10,7 +10,7 @@ import RestMiddleware from 'middleware';
  *
  * @middleware
  */
-export RestMiddleware.handleErrorAsJson = (err, request, response, next) => { // jshint ignore:line
+RestMiddleware.handleErrorAsJson = (err, request, response, next) => { // jshint ignore:line
   // If we at least put in some effort to throw a user-facing Meteor.Error,
   // the default code should be less severe
   if (err.sanitizedError && err.sanitizedError.errorType === 'Meteor.Error') {

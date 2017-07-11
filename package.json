@@ -6,9 +6,11 @@
   "main": "json-routes.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/formspoint/fine-rest.git"
+    "url": "git://github.com/aadamsx/fine-rest.git"
   },
   "dependencies": {
-    "fibers": "^2.0.0"
+    "babel": "^6.23.0",
+    "fibers": "^2.0.0",
+    "underscore": "^1.8.3"
   }
 }
