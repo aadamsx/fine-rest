@@ -1,9 +1,10 @@
 {
-  "name": "FineRest",
+  "name": "fine-rest",
   "version": "1.0.0",
   "license": "MIT",
   "description": "Json Routing for Web API",
   "main": "json-routes.js",
+  "author": "Aaron Adams",
   "repository": {
     "type": "git",
     "url": "git://github.com/aadamsx/fine-rest.git"
