@@ -1,0 +1,14 @@
+{
+  "name": "FineRest",
+  "version": "1.0.0",
+  "license": "MIT",
+  "description": "Json Routing for Web API",
+  "main": "json-routes.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/formspoint/fine-rest.git"
+  },
+  "dependencies": {
+    "fibers": "^2.0.0"
+  }
+}

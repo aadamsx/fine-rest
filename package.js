@@ -1,0 +1,45 @@
+Package.describe({
+  name: 'fine-rest',
+  version: '1.0.0',
+
+  // Brief, one-line summary of the package.
+  summary: 'The simplest way to define server-side routes that return JSON',
+
+  // URL to the Git repository containing the source code for this package.
+  git: 'https://github.com/formspoint/fine-rest',
+
+  // By default, Meteor will default to using README.md for documentation.
+  // To avoid submitting documentation, set this field to null.
+  documentation: 'README.md',
+});
+
+Npm.depends({
+  connect: '2.30.2',
+  'connect-route': '0.1.5',
+});
+
+Package.onUse(function (api) {
+  api.versionsFrom('1.0');
+
+  api.use([
+    'accounts-base@1.2.0',
+    'accounts-password',
+    'check',
+    'underscore',
+    'webapp',
+  ], 'server');
+
+  api.addFiles([
+    'json-routes.js',
+    'rest-login.js',
+    'middleware.js',
+    'json_error_handler_tests.js',
+    'bearer_token_parser.js',
+    'auth.js'
+  ], 'server');
+
+  api.export([
+    'JsonRoutes',
+    'RestMiddleware',
+  ], 'server');
+});
