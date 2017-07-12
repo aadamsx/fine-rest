@@ -20,7 +20,7 @@ $ meteor npm install --save fine-rest
 ### [rest-json-error-handler](#rest-json-error-handler-1)
 
 ...
-### [Change Log](#change)
+### [Change Log](#change-log-1)
 
 ---
 
