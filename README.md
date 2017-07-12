@@ -1,12 +1,15 @@
 
 # This is [fine-rest](https://www.npmjs.com/package/fine-rest)
 
-#### A fine way to define server-side routes that return JSON.
+#### A fine way to define REST server-side routes in Meteor.
+###### Make your Meteor app's data accessible over HTTP. Integrate your Meteor backend into a native mobile app or just query your data over HTTP from any client.
 ---
 
 ```bash
 $ meteor npm install --save fine-rest
 ```
+
+---
 
 ### This one NPM package was formally the following:
 - ### [json-routes](#json-routes-1)
