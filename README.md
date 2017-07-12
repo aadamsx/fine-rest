@@ -4,6 +4,7 @@
 #### A fine way to define REST server-side routes in Meteor.
 ##### Make your Meteor app's data accessible over HTTP. Integrate your Meteor backend into a native mobile app or just query your data over HTTP from any client.
 ---
+Install fine-rest in your Meteor project via npm:
 
 ```bash
 $ meteor npm install --save fine-rest
