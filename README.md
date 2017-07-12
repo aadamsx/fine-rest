@@ -11,13 +11,16 @@ $ meteor npm install --save fine-rest
 
 ---
 
-### This (1) package was formally the following Meteor packages, their functionality now rolled into one fine NPM package:
+### This package was formally the following Meteor packages, their functionality now rolled into one fine NPM package:
 
-- ### [json-routes](#json-routes-1)
-- ### [authenticate-user-by-token](#authenticate-user-by-token-1)
-- ### [rest-accounts-password](#rest-accounts-password-1)
-- ### [rest-bearer-token-parser](#rest-bearer-token-parser-1)
-- ### [rest-json-error-handler](#rest-json-error-handler-1)
+### [json-routes](#json-routes-1)
+### [authenticate-user-by-token](#authenticate-user-by-token-1)
+### [rest-accounts-password](#rest-accounts-password-1)
+### [rest-bearer-token-parser](#rest-bearer-token-parser-1)
+### [rest-json-error-handler](#rest-json-error-handler-1)
+
+...
+### [Change Log](#change)
 
 ---
 
