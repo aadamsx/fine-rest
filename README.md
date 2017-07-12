@@ -1,6 +1,8 @@
 # This is [fine-rest](https://www.npmjs.com/package/fine-rest)
 
 #### A fine way to define server-side routes that return JSON.
+
+NOTE: This readme is a work in progress; but in the mean time, please send in the PRs!
 ---
 
 ##### This one NPM package was formally the following:
