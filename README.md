@@ -7,6 +7,13 @@
 
 ```bash
 $ meteor npm install --save fine-rest
+
+```
+
+Now use fine-rest in project like so:
+
+```javascript
+import { JsonRoutes } from 'fine-rest/json-routes';
 ```
 
 ---
@@ -25,7 +32,7 @@ $ meteor npm install --save fine-rest
 ---
 
 
-# [json-routes](https://github.com/stubailo/meteor-rest/tree/devel/packages/json-routes)
+# json-routes
 
 A bare-bones way to define server-side JSON API endpoints, without
 any extra functionality. Based on [connect-route].
@@ -140,7 +147,7 @@ Alternatively, you could publish a pure NodeJS middleware package to NPM, and yo
 
 ---
 
-# [authenticate-user-by-token](https://github.com/stubailo/meteor-rest/tree/devel/packages/authenticate-user-by-token)
+# authenticate-user-by-token
 Middleware for validating a Meteor.user's login token
 
 ## Middleware Name
@@ -179,7 +186,7 @@ JsonRoutes.add('GET', 'auth/test', function (request, response) {
 
 ---
 
-# [rest-accounts-password](https://github.com/stubailo/meteor-rest/tree/devel/packages/rest-accounts-password)
+# rest-accounts-password
 
 ## Log in and register password accounts over HTTP
 
@@ -236,7 +243,7 @@ HTTP.post("/methods/return-five-auth", {
 
 ---
 
-# [rest-bearer-token-parser](https://github.com/stubailo/meteor-rest/tree/devel/packages/rest-bearer-token-parser)
+# rest-bearer-token-parser
 
 Middleware for parsing a standard bearer token from an HTTP request
 
@@ -266,7 +273,7 @@ The query signature is: `?access_token=<token>`
 
 ---
 
-## [rest-json-error-handler](https://github.com/stubailo/meteor-rest/tree/devel/packages/rest-json-error-handler)
+## rest-json-error-handler
 
 Middleware for converting thrown Meteor.Errors to JSON and sending the response.
 
@@ -309,6 +316,6 @@ JsonRoutes.add('get', 'handle-error', function () {
 # Change Log
 
 
-#### 1.0.0 - 1.0.10
+#### 1.0.0 - 1.0.11
 
 - Refactored code and converted over `JsonRoutes` & related packages to NPM fine-rest
