@@ -11,7 +11,8 @@ $ meteor npm install --save fine-rest
 
 ---
 
-### This one NPM package was formally the following:
+### This (1) package was formally the following Meteor packages, their functionality now rolled into one fine NPM package:
+
 - ### [json-routes](#json-routes-1)
 - ### [authenticate-user-by-token](#authenticate-user-by-token-1)
 - ### [rest-accounts-password](#rest-accounts-password-1)
@@ -23,7 +24,7 @@ $ meteor npm install --save fine-rest
 
 # [json-routes](https://github.com/stubailo/meteor-rest/tree/devel/packages/json-routes)
 
-The simplest bare-bones way to define server-side JSON API endpoints, without
+A bare-bones way to define server-side JSON API endpoints, without
 any extra functionality. Based on [connect-route].
 
 ### Example
@@ -109,7 +110,7 @@ JsonRoutes.Middleware.use(function (req, res, next) {
 
 Once you've created an awesome piece of reusable middleware and you're ready to
 share it with the world, you should make it a Meteor package so it can be easily
-configured in any JSON Routes API. There are only two simple requirements.
+configured in any JSON Routes API. There are only two requirements.
 Actually, they're just very strong recommendations. Nothing will explode if you
 don't follow these guidelines, but doing so should promote a much cleaner
 middleware ecosystem.
@@ -131,12 +132,13 @@ Alternatively, you could publish a pure NodeJS middleware package to NPM, and yo
 
 ### Auth Middleware
 
-- By convention, any middleware you create that parses the request to find an authentication token should then save that token on `req.authToken`. See `simple:rest-bearer-token-parser` for an example.
-- By convention, any middleware you create that determines a user ID should save that ID on `req.userId`. See `simple:authenticate-user-by-token` for an example.
+- By convention, any middleware you create that parses the request to find an authentication token should then save that token on `req.authToken`. See `rest-bearer-token-parser` for an example.
+- By convention, any middleware you create that determines a user ID should save that ID on `req.userId`. See `authenticate-user-by-token` for an example.
 
+---
 
 # [authenticate-user-by-token](https://github.com/stubailo/meteor-rest/tree/devel/packages/authenticate-user-by-token)
-SimpleRest middleware for validating a Meteor.user's login token
+Middleware for validating a Meteor.user's login token
 
 ## Middleware Name
 
@@ -172,16 +174,13 @@ JsonRoutes.add('GET', 'auth/test', function (request, response) {
 });
 ```
 
+---
 
 # [rest-accounts-password](https://github.com/stubailo/meteor-rest/tree/devel/packages/rest-accounts-password)
 
 ## Log in and register password accounts over HTTP
 
-```sh
-meteor add simple:rest-accounts-password
-```
-
-If you have `accounts-password` in your app, and you want to be able to use it over HTTP, this is the package for you. Call these APIs to get an access token, and pass that token to API methods you defined with [`simple:rest`](https://github.com/stubailo/meteor-rest/blob/master/packages/rest/README.md#authentication) to call methods and publications that require login.
+If you have `accounts-password` in your app, and you want to be able to use it over HTTP, this is the package for you. Call these APIs to get an access token, and pass that token to API methods you defined with [`json-routes`](#json-routes-1) to call methods and publications that require login.
 
 Make sure to serve your app over HTTPS if you are using this for login, otherwise people can hijack your passwords. Try the [`force-ssl` package](https://atmospherejs.com/meteor/force-ssl).
 
@@ -232,6 +231,8 @@ HTTP.post("/methods/return-five-auth", {
 });
 ```
 
+---
+
 # [rest-bearer-token-parser](https://github.com/stubailo/meteor-rest/tree/devel/packages/rest-bearer-token-parser)
 
 Middleware for parsing a standard bearer token from an HTTP request
@@ -259,6 +260,8 @@ Accepts tokens passed via the standard header or URL query parameter (whichever 
 The header signature is: `Authorization: Bearer <token>`
 
 The query signature is: `?access_token=<token>`
+
+---
 
 ## [rest-json-error-handler](https://github.com/stubailo/meteor-rest/tree/devel/packages/rest-json-error-handler)
 
