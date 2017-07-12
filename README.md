@@ -9,11 +9,11 @@ $ meteor npm install --save fine-rest
 ```
 
 ### This one NPM package was formally the following:
-- ### [json-routes](#json-routes)
-- ### [authenticate-user-by-token](#authenticate-user-by-token)
-- ### [rest-accounts-password](#rest-accounts-password)
-- ### [rest-bearer-token-parser](#rest-bearer-token-parser)
-- ### [rest-json-error-handler](#rest-json-error-handler)
+- ### [json-routes](#json-routes-1)
+- ### [authenticate-user-by-token](#authenticate-user-by-token-1)
+- ### [rest-accounts-password](#rest-accounts-password-1)
+- ### [rest-bearer-token-parser](#rest-bearer-token-parser-1)
+- ### [rest-json-error-handler](#rest-json-error-handler-1)
 
 ---
 
