@@ -300,11 +300,6 @@ JsonRoutes.add('get', 'handle-error', function () {
 # Change Log
 
 
-
-#### 1.0.1 - 1.0.7
-
-- Readme updates
-
-#### 1.0.0
+#### 1.0.0 - 1.0.7
 
 - Refactored and converted over JsonRoutes package to NPM `JsonRoutes.middleWare` for adding middleware to the stack
