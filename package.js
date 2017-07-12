@@ -1,6 +1,6 @@
 Package.describe({
   name: 'fine-rest',
-  version: '1.0.9',
+  version: '1.0.10',
 
   // Brief, one-line summary of the package.
   summary: 'A fine way to define server-side routes that return JSON',

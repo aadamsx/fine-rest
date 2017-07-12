@@ -1,6 +1,6 @@
 {
   "name": "fine-rest",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "license": "MIT",
   "description": "Json Routing for Web API",
   "main": "json-routes.js",
