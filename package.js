@@ -1,9 +1,9 @@
 Package.describe({
   name: 'fine-rest',
-  version: '1.0.6',
+  version: '1.0.7',
 
   // Brief, one-line summary of the package.
-  summary: 'The simplest way to define server-side routes that return JSON',
+  summary: 'A fine way to define server-side routes that return JSON',
 
   // URL to the Git repository containing the source code for this package.
   git: 'https://github.com/formspoint/fine-rest',
