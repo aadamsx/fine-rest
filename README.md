@@ -8,7 +8,6 @@ Install fine-rest in your Meteor project via npm:
 
 ```bash
 $ meteor npm install --save fine-rest
-
 ```
 
 Now use fine-rest in project like so:
@@ -16,6 +15,10 @@ Now use fine-rest in project like so:
 ```javascript
 import { JsonRoutes } from 'fine-rest/json-routes';
 ```
+
+A Meteor example application using fine-rest:
+
+### [Meteor Web API Example]https://github.com/aadamsx/meteor-web-app-test
 
 ---
 
