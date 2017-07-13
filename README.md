@@ -317,6 +317,6 @@ JsonRoutes.add('get', 'handle-error', function () {
 # Change Log
 
 
-#### 1.0.0 - 1.0.11
+#### 1.0.0 - 1.0.12
 
 - Refactored code and converted over `JsonRoutes` & related packages to NPM fine-rest
