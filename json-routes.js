@@ -427,3 +427,4 @@ function writeJsonToBody(res, json) {
 }
 
 module.exports.JsonRoutes = JsonRoutes;
+module.exports.RestMiddleware = RestMiddleware;
