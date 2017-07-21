@@ -13,7 +13,7 @@ $ meteor npm install --save fine-rest
 Now use fine-rest in project like so:
 
 ```javascript
-import { JsonRoutes } from 'fine-rest/json-routes';
+import { JsonRoutes } from 'fine-rest';
 ```
 
 A Meteor example application using fine-rest:
