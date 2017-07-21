@@ -18,7 +18,9 @@ import { JsonRoutes } from 'fine-rest';
 
 A Meteor example application using fine-rest:
 
+```
 ### [Meteor Web API Example](https://github.com/aadamsx/meteor-web-app-test)
+```
 
 ---
 
