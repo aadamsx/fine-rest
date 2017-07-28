@@ -1,8 +1,8 @@
-/* global JsonRoutes:true */
+import Fiber from 'fibers';
+import connect from 'connect';
+import connectRoute from 'connect-route';
 
-var Fiber = require('fibers');
-var connect = require('connect');
-var connectRoute = require('connect-route');
+import { Mongo, MongoInternals } from 'meteor/mongo';
 
 JsonRoutes = {};
 
@@ -131,16 +131,13 @@ JsonRoutes.Middleware.authenticateMeteorUserByToken =
  *     is invalid
  */
 function getUserIdFromAuthToken(token) {
-  if (!token) {
-    return null;
-  }
+  if (!token) return null;
 
-  const user = Meteor.users.findOne({
-    'services.resume.loginTokens.hashedToken': Accounts._hashLoginToken(token)
-  }, {fields: {_id: 1}});
-  if (user) {
-    return user._id;
-  }
+  const driver = new MongoInternals.RemoteCollectionDriver(Meteor.settings[dbId]); // must have the database URL in your settings.json file
+  const users = new Mongo.Collection("users", { _driver: driver, _suppressSameNameError: true });
+
+  const user = users.findOne({ 'services.resume.loginTokens.hashedToken': Accounts._hashLoginToken(token) }, { fields: { _id: 1 } });
+  if (user) return user._id;
 
   return null;
 }
@@ -210,6 +207,7 @@ JsonRoutes.Middleware.use(JsonRoutes.Middleware.authenticateMeteorUserByToken);
 
 // Handle errors specifically for the login routes correctly
 JsonRoutes.ErrorMiddleware.use('/users/login', RestMiddleware.handleErrorAsJson);
+JsonRoutes.ErrorMiddleware.use('/users/token-login', RestMiddleware.handleErrorAsJson);
 JsonRoutes.ErrorMiddleware.use('/users/register', RestMiddleware.handleErrorAsJson);
 
 
@@ -284,19 +282,39 @@ JsonRoutes.add('options', '/users/login', (req, res) => {
 JsonRoutes.add('post', '/users/login', (req, res) => {
   const options = req.body;
 
-  var user;
-  if (options.hasOwnProperty('email')) {
+  let user;
+  if (options.hasOwnProperty('email') && options.hasOwnProperty('dbId')) {
     check(options, {
       email: String,
       password: String,
+      dbId: String
     });
-    user = Meteor.users.findOne({ 'emails.address': options.email });
-  } else {
+    const driver = new MongoInternals.RemoteCollectionDriver(Meteor.settings[dbId]); // must have the database URL in your settings.json file
+    const users = new Mongo.Collection("users", { _driver: driver, _suppressSameNameError: true });
+    user = users.findOne({ 'emails.address': options.email });
+  } else if (options.hasOwnProperty('username') && options.hasOwnProperty('dbId')) {
     check(options, {
       username: String,
       password: String,
+      dbId: String
     });
-    user = Meteor.users.findOne({ username: options.username });
+    const driver = new MongoInternals.RemoteCollectionDriver(Meteor.settings[dbId]); // must have the database URL in your settings.json file
+    const users = new Mongo.Collection("users", { _driver: driver, _suppressSameNameError: true });
+    user = users.findOne({ username: options.username });
+  } else if (options.hasOwnProperty('email')) {
+    check(options, {
+      email: String,
+      password: String
+    });
+    const users = new Mongo.Collection("users");
+    user = users.findOne({ 'emails.address': options.email });
+  } else if (options.hasOwnProperty('username')) {
+    check(options, {
+      username: String,
+      password: String
+    });
+    const users = new Mongo.Collection("users");
+    user = users.findOne({ username: options.username });
   }
 
   if (!user) {
@@ -320,7 +338,8 @@ JsonRoutes.add('post', '/users/login', (req, res) => {
     when: Date,
   });
 
-  Accounts._insertLoginToken(result.userId, stampedLoginToken);
+  const hashedToken = Accounts._hashStampedToken(stampedLoginToken);
+  users.update({ _id: result.userId }, { $addToSet: { "services.resume.loginTokens": hashedToken } });
 
   const tokenExpiration = Accounts._tokenExpiration(stampedLoginToken.when);
   check(tokenExpiration, Date);
@@ -334,6 +353,76 @@ JsonRoutes.add('post', '/users/login', (req, res) => {
   });
 
 });
+
+
+JsonRoutes.add('options', '/users/token-login', (req, res) => {
+  JsonRoutes.sendResult(res);
+});
+
+JsonRoutes.add('post', '/users/token-login', (req, res) => {
+  const options = req.body;
+
+  let multiMode = true;
+  if (options.hasOwnProperty('dbId')) {
+    check(options, {
+      dbId: String,
+      loginToken: String
+    });
+  } else {
+    multiMode = false
+    check(options, {
+      loginToken: String
+    });
+  }
+
+  const dbId = options.dbId;
+  const loginToken = options.loginToken;
+
+  let users = null;
+  if (multiMode) {
+    const driver = new MongoInternals.RemoteCollectionDriver(Meteor.settings[dbId]); // must have the database URL in your settings.json file
+    users = new Mongo.Collection("users", { _driver: driver, _suppressSameNameError: true });
+  }
+  else {
+    users = new Mongo.Collection("users");
+  }
+  let user = users.findOne({ 'services.login.token': loginToken });
+
+  // No user, in the wrong, could be invalid userId or database, or event token.
+  if (!user) {
+    throw new Meteor.Error('not-found',
+      'User with that login token not found.');
+  }
+
+  // We have a valid user, now assign the id to a variable.
+  const userId = user._id;
+
+  // You're done with this one-time login token, now throw it away so it can't be used again.
+  users.update({ _id: userId }, { $unset: { 'services.login.token': '' } });
+
+  // Generate the stamped token and add it to the user collection
+  const stampedLoginToken = Accounts._generateStampedLoginToken();
+  check(stampedLoginToken, {
+    token: String,
+    when: Date,
+  });
+
+  const hashedToken = Accounts._hashStampedToken(stampedLoginToken);
+  users.update({ _id: userId }, { $addToSet: { "services.resume.loginTokens": hashedToken } });
+
+  const tokenExpiration = Accounts._tokenExpiration(stampedLoginToken.when);
+  check(tokenExpiration, Date);
+
+  JsonRoutes.sendResult(res, {
+    data: {
+      id: userId,
+      token: stampedLoginToken.token,
+      tokenExpires: tokenExpiration,
+    },
+  });
+
+});
+
 
 JsonRoutes.add('options', '/users/register', (req, res) => {
   JsonRoutes.sendResult(res);

@@ -200,15 +200,21 @@ If you have `accounts-password` in your app, and you want to be able to use it o
 
 Make sure to serve your app over HTTPS if you are using this for login, otherwise people can hijack your passwords. Try the [`force-ssl` package](https://atmospherejs.com/meteor/force-ssl).
 
-### POST /users/login, POST /users/register
+### POST /users/login, POST /users/register, POST /users/token-login
 
 The login and registration endpoints take the same inputs. Pass an object with the following properties:
 
 - `username`
 - `email`
 - `password`
+- `dbId`
 
-`password` is required, and you must have at least one of `username` or `email`.
+`password` is required, and you must have at least one of `username` or `email`.  dbId is optional and for multi-database scenarios.
+
+The token-login endpoint only requires a token and optionally a Database ID.
+
+- `dbId`
+- `loginToken`
 
 #### Responses
 
@@ -321,6 +327,12 @@ JsonRoutes.add('get', 'handle-error', function () {
 
 # Change Log
 
+#### 2.0.0
+
+- Added ability to log in with token at ```/users/token-login```.
+- Pass in an optional Database ID for multi database scenarios to ```/users/login```.
+- The log in option ```/users/login``` now has the option to pass in a Database ID for multi database scenarios.
+- Use the setting.json file in your root project to specify your database ID.
 
 #### 1.0.0 - 1.0.12
 
